@@ -10,5 +10,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision :shell, path: "bootstrap.sh"
     config.vm.network :forwarded_port, host: 4567, guest: 80
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-    config.vm.synced_folder "webroot/", "/vagrant/webroot/", :owner => "www-data"
+    config.vm.synced_folder "apps/", "/srv/apps/", :owner => "www-data", :group => "www-data"
 end

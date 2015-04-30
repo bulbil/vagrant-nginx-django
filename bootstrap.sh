@@ -1,22 +1,33 @@
 #/usr/bin/env bash
 
-APTGET_INSTALL=(  "mysql-server"
-      	          "nginx"
+#ridiculously simple shell provisioning
+
+# array of debian packages to install
+APTGET_INSTALL=(  "nginx"
                   "git" 
                   "curl"
                   "htop"
-                  "unzip" )
+                  "unzip"
+                  "python-pip"
+                  "python-dev")
 
-PIP_INSTALL=( "Django"
-              "pillow"
-              "uwsgi" )
-           
+# array of pip packages to install globally
+PIP_INSTALL=( "virtualenv"
+              "virtualenvwrapper"
+              "uwsgi")
+
+# array for virtual pip install
+VENV_INSTALL=( "django" )
+
 apt-get -y update
+apt-get -y upgrade 
 
+# install debian packages
 for i in "${APTGET_INSTALL[@]}"
 do
 
     echo "apt-get -y install ${i}"
+    # for installing mysql set root pw
     if [ "${i}" = "mysql-server" ]
     then
         echo " ******* set selections ******** "
@@ -26,13 +37,24 @@ do
     apt-get -y install "${i}"
 done
 
-echo "sed **********************"
- sed -i s/\;cgi\.fix_pathinfo\s*\=\s*1/cgi.fix_pathinfo\=0/ /etc/php5/fpm/php.ini
- service php5-fpm restart
+# install pip stuff globally
+for i in "${PIP_INSTALL[@]}"
+do
 
-echo "nginx configure **********************"
- ln -s /vagrant/site.conf etc/nginx/sites-enabled/
+    echo "pip install ${i}"
+    pip install "${i}"
+done
 
+# setup django project
+mkdir -p  /srv/apps/project
 
-echo "start services **********************"
- service nginx restart
+# nginx configure : link site config file with nginx folder structure
+# echo "nginx configure **********************"
+cp /vagrant/project /etc/nginx/sites-available/
+ln -s /etc/nginx/sites-available/project /etc/nginx/sites-enabled/
+cp /vagrant/uwsgi_params /etc/nginx/
+cp /vagrant/project.ini /etc/uwsgi/sites/
+cp /vagrant/uwsgi.conf /etc/init/
+
+# echo "start services **********************"
+#  service nginx restart

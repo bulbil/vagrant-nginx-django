@@ -1,0 +1,20 @@
+server {
+    listen 80;
+ 
+    server_name project.iceland.net;
+    charset utf-8;
+
+    # max upload size
+    client_max_body_size  10M;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static {
+      alias /srv/apps/project/static;
+    }
+
+    location ~ \.php$ {
+      	try_files $uri $uri/ =404;
+        include /etc/nginx/uwsgi_params;
+        uwsgi_pass unix:/srv/apps/project/project.socket;
+    }
+}
