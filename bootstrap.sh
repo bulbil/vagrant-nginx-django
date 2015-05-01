@@ -11,8 +11,8 @@ APTGET_INSTALL=(  "nginx"
                   "curl"
                   "htop"
                   "unzip"
-                  "python-pip"
-                  "python-dev")
+                  "python3-pip"
+                  "python3-dev")
 
 # array of pip packages to install globally
 PIP_INSTALL=( "virtualenv"
@@ -47,16 +47,20 @@ do
     python3 -m pip install "${i}"
 done
 
+# virtualenv configure
+mkdir /usr/local/lib/venvs
+
 # nginx configure : link site config file with nginx folder structure
 echo "nginx/uwsgi configure **********************"
 rm /etc/nginx/sites-enabled/default
-cp /vagrant/$PROJECT-nginx /etc/nginx/sites-available/$PROJECT
+cp /vagrant/files/$PROJECT-nginx /etc/nginx/sites-available/$PROJECT
 ln -s /etc/nginx/sites-available/$PROJECT /etc/nginx/sites-enabled/
-cp /vagrant/uwsgi_params /srv/apps/$PROJECT
+cp /vagrant/files/uwsgi_params /srv/apps/$PROJECT
 
+# uwsgi configure
 mkdir -p /etc/uwsgi/sites
-cp /vagrant/project.ini /etc/uwsgi/sites/
-cp /vagrant/uwsgi.conf /etc/init/
+cp /vagrant/files/project.ini /etc/uwsgi/sites/
+cp /vagrant/files/uwsgi.conf /etc/init/
 mkdir -p /run/uwsgi/app/$PROJECT
 chown -R www-data:www-data /run/uwsgi/app
 
