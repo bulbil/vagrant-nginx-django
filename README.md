@@ -13,8 +13,14 @@ Relied on the following online tutorials:
 - This setup relies on a few assumptions:
   - uWSGI is pip-installed globally while all other packages are pip-installed into virtualenvs
   - Python3 configuration: `echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3`
-  - `echo "export WORKON_HOME=/opt/venvs" >> ~/.bashrc`
+  - `echo "export WORKON_HOME=~/venvs" >> ~/.bashrc`
   - `echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc`
   - plus don't forget `-p` flag with `mkvirtualenv` to denote python3
 - Remove link to default in `etc/nginx/sites-enabled/default`
 - Unless specifically configured, Vagrantfile only points traffic from guest port 80 -- so any debugging using other ports won't forward
+
+Steps once vagrant is up:
+- modify bashrc
+- `mkvirtualenv -p python3 <project>`
+- `pip install <whatevers>`
+- `cd /srv/apps` & `django-admin.py startproject project`

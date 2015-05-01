@@ -40,21 +40,22 @@ done
 # install pip stuff globally
 for i in "${PIP_INSTALL[@]}"
 do
-
     echo "pip install ${i}"
     pip install "${i}"
 done
 
-# setup django project
-mkdir -p  /srv/apps/project
-
 # nginx configure : link site config file with nginx folder structure
-# echo "nginx configure **********************"
+echo "nginx/uwsgi configure **********************"
 cp /vagrant/project /etc/nginx/sites-available/
 ln -s /etc/nginx/sites-available/project /etc/nginx/sites-enabled/
 cp /vagrant/uwsgi_params /etc/nginx/
+mkdir -p /etc/uwsgi/sites
 cp /vagrant/project.ini /etc/uwsgi/sites/
 cp /vagrant/uwsgi.conf /etc/init/
+
+echo "export WORKON_HOME=~/venvs" >> /home/vagrant/.bashrc
+echo "source /usr/local/bin/virtualenvwrapper.sh" >> /home/vagrant/.bashrc
+source /home/vagrant/.bashrc
 
 # echo "start services **********************"
 #  service nginx restart
