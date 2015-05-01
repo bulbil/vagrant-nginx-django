@@ -64,6 +64,7 @@ cp /vagrant/files/uwsgi.conf /etc/init/
 mkdir -p /run/uwsgi/app/$PROJECT
 chown -R www-data:www-data /run/uwsgi/app
 
+echo "export ENVWRAPPER_PYTHON=/usr/local/bin/python3" >> /home/vagrant/.bashrc
 echo "export WORKON_HOME=/usr/local/lib/venvs" >> /home/vagrant/.bashrc
 echo "source /usr/local/bin/virtualenvwrapper.sh" >> /home/vagrant/.bashrc
 source /home/vagrant/.bashrc
