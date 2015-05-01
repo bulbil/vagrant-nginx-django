@@ -49,6 +49,7 @@ done
 
 # virtualenv configure
 mkdir /usr/local/lib/venvs
+chown -R vagrant:vagrant /usr/local/lib/venvs
 
 # nginx configure : link site config file with nginx folder structure
 echo "nginx/uwsgi configure **********************"
@@ -59,12 +60,12 @@ cp /vagrant/files/uwsgi_params /srv/apps/$PROJECT
 
 # uwsgi configure
 mkdir -p /etc/uwsgi/sites
-cp /vagrant/files/project.ini /etc/uwsgi/sites/
+cp /vagrant/files/$PROJECT.ini /etc/uwsgi/sites/
 cp /vagrant/files/uwsgi.conf /etc/init/
 mkdir -p /run/uwsgi/app/$PROJECT
 chown -R www-data:www-data /run/uwsgi/app
 
-echo "export ENVWRAPPER_PYTHON=/usr/local/bin/python3" >> /home/vagrant/.bashrc
+echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3" >> /home/vagrant/.bashrc
 echo "export WORKON_HOME=/usr/local/lib/venvs" >> /home/vagrant/.bashrc
 echo "source /usr/local/bin/virtualenvwrapper.sh" >> /home/vagrant/.bashrc
 source /home/vagrant/.bashrc
