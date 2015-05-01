@@ -1,6 +1,9 @@
 #/usr/bin/env bash
 
-#ridiculously simple shell provisioning
+# ridiculously simple shell provisioning
+
+# project name
+PROJECT="iceland"
 
 # array of debian packages to install
 APTGET_INSTALL=(  "nginx"
@@ -41,19 +44,23 @@ done
 for i in "${PIP_INSTALL[@]}"
 do
     echo "pip install ${i}"
-    pip install "${i}"
+    python3 -m pip install "${i}"
 done
 
 # nginx configure : link site config file with nginx folder structure
 echo "nginx/uwsgi configure **********************"
-cp /vagrant/project /etc/nginx/sites-available/
-ln -s /etc/nginx/sites-available/project /etc/nginx/sites-enabled/
-cp /vagrant/uwsgi_params /etc/nginx/
+rm /etc/nginx/sites-enabled/default
+cp /vagrant/$PROJECT-nginx /etc/nginx/sites-available/$PROJECT
+ln -s /etc/nginx/sites-available/$PROJECT /etc/nginx/sites-enabled/
+cp /vagrant/uwsgi_params /srv/apps/$PROJECT
+
 mkdir -p /etc/uwsgi/sites
 cp /vagrant/project.ini /etc/uwsgi/sites/
 cp /vagrant/uwsgi.conf /etc/init/
+mkdir -p /run/uwsgi/app/$PROJECT
+chown -R www-data:www-data /run/uwsgi/app
 
-echo "export WORKON_HOME=~/venvs" >> /home/vagrant/.bashrc
+echo "export WORKON_HOME=/usr/local/lib/venvs" >> /home/vagrant/.bashrc
 echo "source /usr/local/bin/virtualenvwrapper.sh" >> /home/vagrant/.bashrc
 source /home/vagrant/.bashrc
 
