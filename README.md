@@ -20,11 +20,27 @@ Relied on the following online tutorials:
 - Remove link to default in `etc/nginx/sites-enabled/default`
 - Unless specifically configured, Vagrantfile only points traffic from guest port 80 -- so any debugging using other ports won't forward
 
-Steps once vagrant is up:
-- modify bashrc
-- `mkvirtualenv --no-site-packages -i django -i <others> -p python3 <project>`
+#### Steps once vagrant is up:
+Configure PostgreSQL
+- `createdb <name>` & `createuser -P`
+- `psql`
+- grant privileges ...
+
+Configure virtualenvwrapper + Django project 
+- `mkvirtualenv --no-site-packages -i django -i psycopg2 -i <others> -p python3 <project>`
 - `cd /srv/apps/<project>` & `django-admin.py startproject <project> [existing path]`
 - `mkdir /srv/apps/<project>/static`
-- `settings.py` 17:`STATIC_ROOT=os.path.join(BASE_DIR,'static')`
+- `settings.py`
+  - 17:`STATIC_ROOT=os.path.join(BASE_DIR,'static')`
+  - not all `INSTALLED_APPS` necessary -- delete any before running `migrate`
+  - change `DATABASE` settings:
+    ```
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '<db>',
+        'USER': '<user>',
+        'PASSWORD': '<pw>',
+        'HOST': 'localhost',
+        'PORT': '',
+    ```
 - `./manage.py migrate`
 - `./manage.py collectstatic`

@@ -12,7 +12,10 @@ APTGET_INSTALL=(  "nginx"
                   "htop"
                   "unzip"
                   "python3-pip"
-                  "python3-dev")
+                  "python3-dev"
+                  "libpq-dev"
+                  "postgresql"
+                  "postgresql-contrib" )
 
 # array of pip packages to install globally
 PIP_INSTALL=( "virtualenv"
@@ -53,7 +56,6 @@ chown -R vagrant:vagrant /usr/local/lib/venvs
 
 # nginx configure : link site config file with nginx folder structure
 echo "nginx/uwsgi configure **********************"
-rm /etc/nginx/sites-enabled/default
 cp /vagrant/files/$PROJECT-nginx /etc/nginx/sites-available/$PROJECT
 ln -s /etc/nginx/sites-available/$PROJECT /etc/nginx/sites-enabled/
 cp /vagrant/files/uwsgi_params /srv/apps/$PROJECT
