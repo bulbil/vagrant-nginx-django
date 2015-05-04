@@ -25,6 +25,7 @@ Configure PostgreSQL
 - `createdb <name>` & `createuser -P`
 - `psql`
 - grant privileges ...
+- you may have to change `etc/postgresql/<version>/main/pg_hba.conf` to except `md5` authentication
 
 Configure virtualenvwrapper + Django project 
 - `mkvirtualenv --no-site-packages -i django -i psycopg2 -i <others> -p python3 <project>`
@@ -34,13 +35,13 @@ Configure virtualenvwrapper + Django project
   - 17:`STATIC_ROOT=os.path.join(BASE_DIR,'static')`
   - not all `INSTALLED_APPS` necessary -- delete any before running `migrate`
   - change `DATABASE` settings:
-    ```
+```
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': '<db>',
         'USER': '<user>',
         'PASSWORD': '<pw>',
         'HOST': 'localhost',
         'PORT': '',
-    ```
+```
 - `./manage.py migrate`
 - `./manage.py collectstatic`
