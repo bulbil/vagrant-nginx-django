@@ -28,7 +28,7 @@ Configure PostgreSQL
 - you may have to change `etc/postgresql/<version>/main/pg_hba.conf` to except `md5` authentication
 
 Configure virtualenvwrapper + Django project 
-- `mkvirtualenv --no-site-packages -i django -i psycopg2 -i <others> -p python3 <project>`
+- `mkvirtualenv --no-site-packages -i django -i psycopg2 -i django-bootstrap3 -p python3 <project>`
 - `cd /srv/apps/<project>` & `django-admin.py startproject <project> [existing path]`
 - `mkdir /srv/apps/<project>/static`
 - `settings.py`
@@ -45,3 +45,4 @@ Configure virtualenvwrapper + Django project
 ```
 - `./manage.py migrate`
 - `./manage.py collectstatic`
+- if using `./manage.py runserver` don't forget `0.0.0.0:8000` (quirk of how 127.0.0.1 "loops back" -- or something)
