@@ -46,3 +46,8 @@ Configure virtualenvwrapper + Django project
 - `./manage.py migrate`
 - `./manage.py collectstatic`
 - if using `./manage.py runserver` don't forget `0.0.0.0:8000` (quirk of how 127.0.0.1 "loops back" -- or something)
+
+## FONTS
+- to deal with the issue of characters that are not conventionally supported by existing unicode hex, loaded a Navajo web font
+- [source font[(http://www.lapahie.com/Fonts/Navajo_Fonts_Windows/Century_Gothic_Navajo/CENTGN__.TTF)
+- [font generator](https://fontie.flowyapps.com/home)

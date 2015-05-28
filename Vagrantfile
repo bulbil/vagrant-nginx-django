@@ -8,7 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.vm.box = "ubuntu/trusty64"
     config.vm.provision :shell, path: "bootstrap.sh"
-    config.vm.network :forwarded_port, host: 4567, guest: 80
+    config.vm.network :forwarded_port, host: 4567, guest: 8000
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
     config.vm.synced_folder "iceland/", "/srv/apps/iceland/",
       owner: "vagrant", group: "www-data", create: true 
