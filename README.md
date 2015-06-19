@@ -51,3 +51,4 @@ Configure virtualenvwrapper + Django project
 - to deal with the issue of characters that are not conventionally supported by existing unicode hex, loaded a Navajo web font
 - [source font[(http://www.lapahie.com/Fonts/Navajo_Fonts_Windows/Century_Gothic_Navajo/CENTGN__.TTF)
 - [font generator](https://fontie.flowyapps.com/home)
+- or, possibly a way simpler solution, [language geek's keyboard](http://www.languagegeek.com/dene/keyboards/romdene.html#Southwest)
